@@ -1,0 +1,21 @@
+@mixin respond($breakpoint) {
+    // @if $breakpoint == mobile {
+    //   @media (min-width: 360px) {@content}; 
+    // }
+    // @if $breakpoint == tablet {
+    //   @media (min-width: 768px) {@content}; 
+    // }
+    // @if $breakpoint == desktop {
+    //   @media (min-width: 1024px) {@content}; 
+    // } 
+    @if $breakpoint == desktopPlus {
+      @media (max-width: 1300px) {@content}; 
+    } 
+}   
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}  
+}
