@@ -7,41 +7,75 @@
 
 .wrapper {
     max-width: 1600px;
+    min-width: 320px;
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    position: relative;
+
 
     /// HEADER
     .header {
         width: 100%;
         padding: 50px 80px;
-        @include respond (desktopPlus) {
-            padding: 50px 38px;
-        }
+        overflow: hidden;
         background: url('../img/header-bg.png') no-repeat;
+        background-size: cover;
+
+        @include respond (desktopPlus) {
+            padding: 50px 30px;
+        }
+
+        @include respond (mobile) {
+            padding: 15px;
+        }
+
         /// HEADER TOP
         .header-top {
             display: flex;
+            position: relative;
+            align-items: center;
+
+            @include respond (tablet) {
+                justify-content: space-between;
+            }
 
             .logo-container {
                 width: 33%;
+                order: 1;
+
+                @include respond (tablet) {
+                    width: auto;
+                    order: 2;
+                }
 
                 .logo {
                     height: 30px;
                     width: 180px;
                     background: url('../img/logo-icon.png') no-repeat;
+
+                    @include respond (mobile) {
+                        background-size: 80%;
+                        background-position: 50%;
+                    }
+
                 }
             }
 
             .nav {
                 width: 33%;
                 display: flex;
+                order: 2;
+
+                @include respond (tablet) {
+                    display: none;
+                }
 
                 & a {
                     display: block;
                     font-family: $RalewaySemiBold;
                     color: $white;
-                    padding: 7px 24px 0px 24px;
+                    padding: 4px 24px 0px 24px;
                     transition: .3s;
                     font-size: 0.9375rem;
                 }
@@ -54,19 +88,134 @@
 
             .signup {
                 width: 34%;
-                margin-top: 3px;
                 display: flex;
                 justify-content: flex-end;
+                order: 3;
+
+                @include respond (tablet) {
+                    width: auto;
+                }
+            }
+
+            .burger-btn {
+                height: 18px;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+
+                @include respond (tablet) {
+                    display: flex;
+                    order: 1;
+                }
+
+                &__line {
+                    background: $white;
+                    height: 4px;
+                    width: 22px;
+                    border-radius: 2px;
+                }
+            }
+
+            .burger-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                background: $white;
+                transform-origin: 0% 0%;
+                transform: translate(-300%, 0);
+                transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+                z-index: 12;
+
+                .burger-close {
+                    margin-left: auto;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    position: relative;
+
+                    &__line {
+                        position: absolute;
+                        height: 4px;
+                        width: 22px;
+                        background: $primary;
+
+                        &:nth-last-of-type(1) {
+                            transform: rotate(45deg);
+                        }
+
+                        &:nth-last-of-type(2) {
+                            transform: rotate(-45deg);
+                        }
+                    }
+                }
+
+                .burger-nav {
+                    width: 320px;
+                    display: flex;
+                    flex-direction: column;
+
+                    & a {
+                        display: block;
+                        font-family: $RalewaySemiBold;
+                        color: $primary;
+                        padding: 20px 24px;
+                        transition: .3s;
+                        font-size: 1rem;
+                    }
+
+                    & a:hover {
+                        background: $primary;
+                        color: $white;
+                        transition: .3s;
+                    }
+                }
+            }
+
+            .burger-menu.active {
+                transform-origin: 0% 0%;
+                transform: translate(0, 0);
+                transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
             }
         }
+
         /// HEADER BODY
         .header-body {
             display: flex;
+
+            @include respond (tablet) {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding-top: 50px;
+            }
+
+            @include respond (mobile) {
+                padding-top: 30px;
+            }
 
             .info {
                 width: 50%;
                 padding-top: 156px;
                 padding-bottom: 136px;
+
+                @include respond (tablet) {
+                    order: 2;
+                    width: 63%;
+                    padding-top: 30px;
+                    padding-bottom: 0;
+                }
+
+                @include respond (mobile) {
+                    width: 100%;
+                    padding-top: 15px;
+                }
+
                 & h1 {
                     width: 70%;
                     color: #fff;
@@ -77,8 +226,20 @@
                     letter-spacing: -0.5px;
                     word-spacing: 2px;
                     line-height: 66px;
+
                     @include respond (desktopPlus) {
                         font-size: 3rem;
+                    }
+
+                    @include respond (tablet) {
+                        width: 100%;
+                        font-size: 2.375rem;
+                        text-align: center;
+                    }
+
+                    @include respond (mobile) {
+                        font-size: 2rem;
+                        line-height: 30px;
                     }
                 }
 
@@ -88,10 +249,33 @@
                     color: $white;
                     font-size: 1.125rem;
                     line-height: 35px;
+
+                    @include respond (tablet) {
+                        width: 100%;
+                        font-size: 1rem;
+                        text-align: center;
+                    }
+
+                    @include respond (mobile) {
+                        font-size: 0.875rem;
+                        line-height: 18px;
+                        max-width: 520px;
+                        margin:auto;
+                    }
                 }
 
                 .info-btns {
                     margin-top: 30px;
+
+                    @include respond (tablet) {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    @include respond (mobile) {
+                        margin: 15px 0px;
+                    }
 
                     & button:last-child {
                         margin-left: 24px;
@@ -104,6 +288,16 @@
                 display: flex;
                 justify-content: flex-end;
 
+                @include respond (tablet) {
+                    order: 1;
+                    width: 63%;
+                    justify-content: center;
+                }
+
+                @include respond (mobile) {
+                    width: 100%;
+                }
+
                 .video-box {
                     display: flex;
                     flex-direction: column;
@@ -115,13 +309,28 @@
                     border-radius: 4px;
                     background: url('../img/video-bg.png') no-repeat;
                     background-position: 50% 25%;
-                    box-shadow: 0px 7px 35px rgba(0,0,0,.15), 0px 7px 12px rgba(0,0,0,.15);
+                    box-shadow: 0px 7px 35px rgba(0, 0, 0, .15), 0px 7px 12px rgba(0, 0, 0, .15);
+
+                    @include respond (tablet) {
+                        width: 100%;
+                        margin-top: 0px;
+                    }
+
+                    @include respond (mobile) {
+                        height: 230px;
+                        background-size: 160%;
+                        max-width: 520px;
+                    }
 
                     & button {
                         padding: 0;
                         width: 58px;
                         height: 58px;
                         margin-top: 116px;
+
+                        @include respond (mobile) {
+                            margin-top: 75px;
+                        }
                     }
 
                     & p {
@@ -135,30 +344,51 @@
             }
         }
     }
+
     /// MAIN
     .main {
+
         /// BENEFITS
         .benefits {
             padding: 90px 80px 100px 80px;
+
             @include respond (desktopPlus) {
-                padding: 45px 38px 50px 38px;
+                padding: 45px 30px 50px 30px;
             }
-            & h2,p,span {
+
+            @include respond (mobile) {
+                padding: 30px 15px;
+            }
+
+            & h2,
+            p,
+            span {
                 text-align: center;
             }
+
             & h2 {
                 color: $primary;
                 font-size: 2.875rem;
                 font-family: $RalewaySemiBold;
                 letter-spacing: -0.5px;
+
+                @include respond (mobile) {
+                    font-size: 1.875rem;
+                }
             }
+
             & p {
                 color: $grey;
                 font-family: $RalewaySemiBold;
                 padding-top: 9px;
                 font-size: 1.5rem;
-                letter-spacing: 0.5px
+                letter-spacing: 0.5px;
+
+                @include respond (mobile) {
+                    font-size: 1rem;
+                }
             }
+
             & span {
                 display: block;
                 width: 38.6%;
@@ -168,128 +398,255 @@
                 font-family: $Raleway;
                 font-size: 0.9375rem;
                 color: $grey;
+
+                @include respond (mobile) {
+                    width: 100%;
+                    font-size: 0.875rem;
+                    line-height: 18px;
+                    max-width: 520px;
+                }
             }
+
             .benefits-cards {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 90px;
+
+                @include respond (mobile) {
+                    margin-top: 0px;
+                    flex-direction: column;
+                }
+
                 .card {
                     width: 24%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    & h3 {
-                        font-family: $RalewaySemiBold;
-                        font-size: 1.25rem;
-                        padding-top: 37px;
-                        padding-left: 5px;
-                    }
-                    & span {
+
+                    @include respond (mobile) {
                         width: 100%;
-                        padding-top: 11px;
-                        line-height: 20px;
+                        flex-direction: row;
+                        align-items: initial;
+                        justify-content: initial;
+                        margin-top: 30px;
+                    }
+
+                    .card-icon {
+                        & img {
+                            @include respond (mobile) {
+                                width: 50px;
+                            }
+                        }
+                    }
+
+                    .card-info {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+
+                        @include respond (mobile) {
+                            padding-left: 15px;
+                            align-items: flex-start;
+                        }
+
+                        & h3 {
+                            font-family: $RalewaySemiBold;
+                            font-size: 1.25rem;
+                            padding-top: 37px;
+                            padding-left: 5px;
+
+                            @include respond (mobile) {
+                                padding-top: 0px;
+                                padding-left: 0px;
+                            }
+                        }
+
+                        & span {
+                            width: 100%;
+                            padding-top: 11px;
+                            line-height: 20px;
+
+                            @include respond (mobile) {
+                                text-align: left;
+                            }
+                        }
                     }
                 }
+
                 .card.calendar .card-icon,
                 .card.person2 .card-icon {
                     padding-top: 5px;
+
+                    @include respond (mobile) {
+                        padding-top: 0px;
+                    }
                 }
+
                 .card.person1 h3 {
                     padding-top: 33px;
                     padding-left: 2px;
+
+                    @include respond (mobile) {
+                        padding-top: 0px;
+                    }
                 }
+
                 .card.person2 h3 {
                     padding-left: 0px;
                 }
             }
+
             .benefits-btn {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin-top: 77px;
+
+                @include respond (mobile) {
+                    margin-top: 30px;
+                }
+
                 & button {
                     padding: 19px 29px;
+
+                    @include respond (mobile) {
+                        padding: 15px 30px;
+                    }
                 }
             }
         }
+
         /// STATISTICS
         .statistics {
             display: flex;
             width: 100%;
             height: 150px;
+
+            @include respond (mobile) {
+                flex-direction: column;
+                height: auto;
+            }
+
             .statistics-block {
                 width: 25%;
                 display: flex;
                 padding-top: 45px;
+
+                @include respond (mobile) {
+                    width: 100%;
+                    padding: 15px;
+                    padding-left: 40%;
+                }
+
                 .statistics-icon {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 }
+
                 & p {
                     font-family: $RalewayExtraBold;
                     color: $white;
                     padding-left: 23px;
                     font-size: 1.250rem;
-                    padding-top:4px;
-                    &:nth-child(2) {
-                        padding-top:2px;
+                    padding-top: 4px;
+
+                    @include respond (tablet) {
+                        font-size: 1rem;
                     }
-                   
+
+                    &:nth-child(2) {
+                        padding-top: 2px;
+                    }
+
                 }
             }
+
             .statistics-icon {
                 height: 60px;
                 width: 60px;
                 background: $white;
                 border-radius: 100%;
+
+                @include respond (tablet) {
+                    height: 40px;
+                    width: 40px;
+                    min-height: 40px;
+                    min-width: 40px;
+                }
             }
+
             .business {
                 background: $blue;
                 padding-left: 7.3%;
+
                 @include respond (desktopPlus) {
                     padding-left: 4%;
                 }
             }
+
             .downloads {
                 background: $darkBlue;
                 padding-left: 6.5%;
+
                 @include respond (desktopPlus) {
                     padding-left: 3%;
                 }
             }
+
             .installs {
                 background: $purple;
                 padding-left: 6%;
+
                 @include respond (desktopPlus) {
                     padding-left: 3%;
                 }
             }
+
             .users {
                 background: $pink;
                 padding-left: 5.6%;
+
                 @include respond (desktopPlus) {
                     padding-left: 2.5%;
                 }
             }
         }
+
         /// SERVICES
         .services {
             width: 50%;
             min-width: 800px;
             margin: auto;
             padding: 90px 0px 83px 0px;
-            & h2,span {
+
+            @include respond (tablet) {
+                min-width: 600px;
+            }
+
+            @include respond (mobile) {
+                min-width: 320px;
+                padding: 30px 0px;
+            }
+
+            & h2,
+            span {
                 text-align: center;
             }
+
             & h2 {
                 color: $primary;
                 font-size: 2.875rem;
                 font-family: $RalewaySemiBold;
                 letter-spacing: -0.5px;
+
+                @include respond (mobile) {
+                    font-size: 1.875rem;
+                }
             }
+
             & span {
                 display: block;
                 width: 77%;
@@ -299,98 +656,230 @@
                 font-family: $Raleway;
                 font-size: 0.9375rem;
                 color: $grey;
+
+                @include respond (mobile) {
+                    font-size: 0.875rem;
+                    line-height: 18px;
+                    width: 100%;
+                    padding-top: 15px;
+                }
             }
+
             .app-accordion {
                 width: 100%;
                 padding-top: 27px;
             }
         }
+
         /// CUSTOMERS
         .customers {
             display: flex;
             padding: 40px 80px;
             background: url('../img/customers-bg.png') no-repeat;
+
             @include respond (desktopPlus) {
-                padding: 40px 38px;
+                padding: 40px 30px;
             }
+
+            @include respond (tablet) {
+                flex-direction: column;
+            }
+
+            @include respond (mobile) {
+                padding: 30px 15px;
+            }
+
             .customers-info {
                 width: 46.5%;
+
                 @include respond (desktopPlus) {
                     width: 35%;
                 }
-                & h2,p {
+
+                @include respond (tablet) {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                & h2,
+                p {
                     color: $white;
                     font-family: $RalewaySemiBold;
+
+                    @include respond (tablet) {
+                        text-align: center;
+                    }
                 }
+
                 & h2 {
                     font-size: 3rem;
                     width: 70%;
                     padding-top: 82px;
                     letter-spacing: -1.55px;
+
                     @include respond (desktopPlus) {
                         font-size: 2.5rem;
                         padding-top: 60px;
                     }
+
+                    @include respond (tablet) {
+                        width: 100%;
+                        padding-top: 0px;
+                    }
+
+                    @include respond (mobile) {
+                        font-size: 1.875rem;
+                    }
                 }
+
                 & p {
                     padding-top: 11px;
                     width: 78%;
                     font-size: 0.9375rem;
                     line-height: 25px;
+
+                    @include respond (tablet) {
+                        width: 100%;
+                    }
+
+                    @include respond (mobile) {
+                        font-size: 0.875rem;
+                        line-height: 18px;
+                        max-width: 520px;
+                    }
                 }
+
                 & button {
                     margin-top: 72px;
                     padding: 20px 29px;
+
                     @include respond (desktopPlus) {
                         margin-top: 35px;
                     }
+
+                    @include respond (tablet) {
+                        margin-top: 30px;
+                        margin-bottom: 30px;
+                    }
+
+                    @include respond (mobile) {
+                        padding: 15px 30px;
+                        font-size: 0.750rem;
+                    }
                 }
             }
+
             .customers-comments {
                 width: 53.5%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+
                 @include respond (desktopPlus) {
                     width: 65%;
+                    min-width: 663px;
                 }
+
+                @include respond (tablet) {
+                    width: 100%;
+                    min-width: auto;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
                 & button {
                     background: none;
                     cursor: pointer;
                     margin-left: 122px;
+
+                    @include respond (tablet) {
+                        margin-left: 0px;
+                    }
                 }
+
+                & button:nth-of-type(1) {
+                    @include respond (tablet) {
+                        transform: rotate(-90deg);
+                    }
+                }
+
                 & button:nth-of-type(2) {
                     transform: rotate(180deg);
-                    margin-top:25px;
+                    margin-top: 25px;
+
+                    @include respond (tablet) {
+                        transform: rotate(90deg);
+                        margin-top: 0px;
+                    }
                 }
+
                 .comments-item {
                     display: flex;
-                    margin-top:28px;
+                    margin-top: 28px;
                     min-width: 693px;
+
                     @include respond (desktopPlus) {
-                        min-width: 662px;
+                        min-width: 100%;
                     }
+
+                    @include respond (tablet) {
+                        min-width: auto;
+                        margin-top: 0px;
+                        align-items: center;
+                    }
+
                     &__img {
                         width: 16%;
+
+                        @include respond (tablet) {
+                            margin-right: 10px;
+                            min-width: 65px;
+                        }
+
+                        @include respond (mobile) {
+                            min-width: 50px;
+                            max-width: 80px;
+                        }
+
                         & img {
-                           
-                           &:nth-of-type(1) {
-                            padding-top: 47px;
-                           }
+
+                            &:nth-of-type(1) {
+                                padding-top: 47px;
+
+                                @include respond (tablet) {
+                                    padding-top: 0px;
+                                }
+                            }
+
+                            @include respond (mobile) {
+                                width: 50px;
+                            }
                         }
                     }
+
                     &__text {
                         width: 84%;
                         background: $white;
                         border-radius: 4px;
-                        padding:27px;
+                        padding: 27px;
+
                         @include respond (desktopPlus) {
-                            padding:27px 14px;
+                            padding: 27px 14px;
                         }
+
+                        @include respond (tablet) {
+                            padding: 14px;
+                        }
+
                         & h3 {
                             font-family: $RalewayBold;
                             font-size: 1.125rem;
                         }
+
                         & p {
                             width: 95%;
                             font-family: $Raleway;
@@ -399,28 +888,64 @@
                             font-size: 0.9375rem;
                             padding-top: 12px;
                             line-height: 25px;
+
+                            @include respond (tablet) {
+                                width: 100%;
+                            }
+
+                            @include respond (mobile) {
+                                font-size: 0.750rem;
+                                line-height: 18px;
+                            }
                         }
                     }
                 }
+
                 .comments-item:nth-of-type(2) {
                     margin-top: 69px;
+
+                    @include respond (desktopPlus) {
+                        margin-top: 50px;
+                    }
+
+                    @include respond (tablet) {
+                        margin-top: 0px;
+                    }
+
+                    @include respond (mobile) {
+                        display: none;
+                    }
                 }
             }
         }
+
         /// TEAM
         .team {
             width: 50%;
             margin: auto;
             padding: 90px 0px;
-            & h2,span {
+
+            @include respond (mobile) {
+                width: 100%;
+                padding: 30px 15px;
+            }
+
+            & h2,
+            span {
                 text-align: center;
             }
+
             & h2 {
                 color: $primary;
                 font-size: 2.875rem;
                 font-family: $RalewaySemiBold;
                 letter-spacing: -0.5px;
+
+                @include respond (mobile) {
+                    font-size: 1.875rem;
+                }
             }
+
             & span {
                 display: block;
                 width: 77%;
@@ -430,33 +955,63 @@
                 font-family: $Raleway;
                 font-size: 0.9375rem;
                 color: $grey;
+
+                @include respond (mobile) {
+                    font-size: 0.875rem;
+                    line-height: 18px;
+                    width: 100%;
+                    max-width: 520px;
+                }
             }
+
             .team-members {
                 margin-top: 67px;
+
+                @include respond (mobile) {
+                    margin-top: 30px;
+                }
+
                 .member-icons {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 }
+
                 & img {
                     cursor: pointer;
+
                     &:nth-of-type(1),
                     &:nth-of-type(3) {
                         height: 100px;
                         width: 100px;
+
+                        @include respond (mobile) {
+                            height: 50px;
+                            width: 50px;
+                        }
                     }
+
                     &:nth-of-type(2) {
                         margin: 0px 22px;
+
+                        @include respond (mobile) {
+                            height: 100px;
+                            width: 100px;
+                        }
                     }
                 }
-                & h3,p {
+
+                & h3,
+                p {
                     text-align: center;
                 }
+
                 & h3 {
                     font-family: $RalewayBold;
                     font-size: 1.125rem;
                     padding-top: 30px;
                 }
+
                 & p {
                     width: 82%;
                     margin: auto;
@@ -465,37 +1020,64 @@
                     font-size: 0.9375rem;
                     padding-top: 15px;
                     line-height: 25px;
+
+                    @include respond (mobile) {
+                        width: 100%;
+                        font-size: 0.875rem;
+                        line-height: 18px;
+                        max-width: 520px;
+                    }
                 }
             }
+
             .team-social {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin-top: 23px;
+
                 & a {
                     display: block;
                     padding: 0px 14px;
                 }
             }
         }
+
         /// CONTACTS
         .contacts-wrapper {
             background: $lightGrey;
+
             .contacts {
                 width: 50%;
                 min-width: 800px;
                 margin: auto;
                 padding: 34px 0px 101px 0px;
-                
-                & h2,p {
+
+                @include respond (tablet) {
+                    min-width: 600px;
+                }
+
+                @include respond (mobile) {
+                    min-width: 320px;
+                    padding: 30px 0px;
+                }
+
+                & h2,
+                p {
                     text-align: center;
                 }
+
                 & h2 {
                     color: $primary;
                     font-size: 2.875rem;
                     font-family: $RalewaySemiBold;
                     letter-spacing: -0.5px;
+
+                    @include respond (mobile) {
+                        font-size: 1.875rem;
+                    }
                 }
+
                 & p {
                     display: block;
                     width: 77%;
@@ -505,59 +1087,115 @@
                     font-family: $Raleway;
                     font-size: 0.9375rem;
                     color: $grey;
+
+                    @include respond (mobile) {
+                        font-size: 0.875rem;
+                        line-height: 18px;
+                        width: 100%;
+                    }
                 }
+
                 .contacts-form {
                     width: 75%;
                     margin: auto;
                     padding-top: 45px;
+                    @include respond (mobile) {
+                        width: 90%;
+                    }
+
                     .form-row {
                         display: flex;
                         margin-bottom: 20px;
+
+                        @include respond (mobile) {
+                            flex-direction: column;
+                        }
+
                         .lastName {
                             margin-left: 40px;
+
+                            @include respond (mobile) {
+                                margin-left: 0px;
+                                margin-top: 20px;
+                            }
                         }
+
                         .phone {
                             margin-left: 40px;
+
+                            @include respond (mobile) {
+                                margin-left: 0px;
+                                margin-top: 20px;
+                            }
                         }
                     }
+
                     .app-textarea {
                         height: 150px;
                         margin-bottom: 20px;
                     }
-    
+
                     .form-bottom {
                         display: flex;
                         justify-content: space-between;
-    
+
+                        @include respond (mobile) {
+                            flex-direction: column;
+                        }
+
                         & button {
                             padding: 16px 44px;
                             font-family: $RalewayMedium;
                             font-size: 0.9375rem;
                             font-weight: 400;
+                            @include respond (mobile) {
+                                padding: 15px 30px;
+                                font-size: 0.750rem;
+                                margin-top: 30px;
+                            }
                         }
                     }
                 }
             }
         }
     }
+
     /// FOOTER
     .footer {
         padding: 90px 80px 99px 80px;
         background: $primary;
-        .footer-top, .footer-bottom {
+
+        @include respond (tablet) {
+            padding: 90px 30px 99px 30px;
+        }
+        @include respond (mobile) {
+            padding: 30px 15px;
+        }
+
+        .footer-top,
+        .footer-bottom {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            @include respond (mobile) {
+                flex-direction: column;
+            }
         }
+
         .footer-top {
             padding-top: 4px;
+
             .footer-logo {
                 height: 30px;
                 width: 180px;
                 background: url('../img/logo-icon.png') no-repeat;
             }
+
             .footer-nav {
                 display: flex;
+                @include respond (mobile) {
+                    margin-top: 30px;
+                }
                 & a {
                     display: block;
                     font-family: $RalewaySemiBold;
@@ -565,17 +1203,33 @@
                     padding-left: 48.5px;
                     transition: .3s;
                     font-size: 0.9375rem;
+                    @include respond (mobile) {
+                        padding-left: 10px;
+                        font-size: 0.875rem;
+                    }
+                    &:nth-of-type(1){
+                        @include respond (mobile) {
+                            padding-left: 0px;
+                        }
+                    }
                 }
             }
         }
+
         .footer-links {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-top: 43px;
+            @include respond (mobile) {
+                flex-direction: column;
+                margin-top: 15px;
+            }
+
             &__inner {
                 display: flex;
                 align-items: center;
+
                 & a {
                     display: flex;
                     align-items: center;
@@ -583,24 +1237,55 @@
                     font-size: 0.9375rem;
                     color: $grey;
                     margin-right: 17px;
+                    @include respond (mobile) {
+                        font-size: 0.875rem;
+                        margin-right: 0px;
+                    }
+
                     & span {
                         font-size: 1.750rem;
                         padding-right: 17px;
+                        @include respond (mobile) {
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        }
                     }
                 }
             }
+
             &__social {
                 display: flex;
                 align-items: center;
+                @include respond (mobile) {
+                    margin-top:15px;
+                }
+
                 & a {
                     display: block;
                     padding-left: 17px;
-                    padding-top:8px;
+                    padding-top: 8px;
                 }
+
                 & a:nth-of-type(3) {
                     padding-left: 22px;
                 }
             }
         }
+    }
+
+    .blackout {
+        display: none;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 10;
+    }
+
+    .blackout.open {
+        display: block;
     }
 }
